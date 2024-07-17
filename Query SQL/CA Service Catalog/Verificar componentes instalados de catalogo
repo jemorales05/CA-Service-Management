@@ -1,0 +1,2 @@
+use mdb
+select * from al_cdb_configurationparameters where configkey like 'slcm%' 
