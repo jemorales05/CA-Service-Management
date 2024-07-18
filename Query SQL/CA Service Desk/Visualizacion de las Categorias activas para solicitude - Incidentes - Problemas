@@ -1,0 +1,30 @@
+--=================================================================================================================--
+--=																											 	  =--
+--=                Visualizacion de las Categorias activas para solicitude / Incidentes / Problemas		          =--
+--=																												  =--
+--=================================================================================================================--
+
+
+use mdb
+ go
+
+select 
+id,
+persid, 
+sym as Categoria, 
+ (select last_name from ca_contact where contact_uuid = cat.group_id) as Grupo,
+  (select userid from ca_contact where contact_uuid = cat.assignee) as Userid,
+case cr_flag When '0' THEN 'NO' WHEN '1' THEN 'SI' ELSE NULL END AS [Usada en solicitudes], 
+case in_flag When '0' THEN 'NO' WHEN '1' THEN 'SI' ELSE NULL END AS [Usada en Incidentes],
+case pr_flag When '0' THEN 'NO' WHEN '1' THEN 'SI' ELSE NULL END AS [Usada en problemas], 
+case ss_include When '0' THEN 'NO' WHEN '1' THEN 'SI' ELSE NULL END AS [Usada en Autoservicio], 
+ss_sym as [Categoria en Autoservicio], 
+description as Descripcion, 
+(select sym from urgncy where value = cat.category_urgency) as Urgencia,
+
+
+(select sym from srv_desc where persid = cat.service_type) as [Service Type],
+service_type
+
+from prob_ctg cat
+where del = '0' 

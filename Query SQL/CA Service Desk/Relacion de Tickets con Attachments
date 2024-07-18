@@ -1,0 +1,10 @@
+use MDB
+SELECT     
+dbo.call_req.ref_num AS [Ticket Number],
+dbo.call_req.type AS [Type],
+dbo.attmnt.attmnt_name AS [Original File Name],
+dbo.attmnt.file_name AS [Attachment File Name],
+dbo.attmnt.rel_file_path AS Folder
+
+FROM        
+dbo.attmnt INNER JOIN dbo.usp_lrel_attachments_requests ON dbo.attmnt.id = dbo.usp_lrel_attachments_requests.attmnt LEFT OUTER JOIN dbo.call_req ON dbo.usp_lrel_attachments_requests.cr = dbo.call_req.persid 
